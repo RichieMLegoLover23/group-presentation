@@ -1,0 +1,118 @@
+import requests
+import json
+
+def chat(message):
+    url = "https://api.openai.com/v1/engines/davinci-codex/completions"
+    data = {
+        "prompt": message,
+        "max_tokens": 60,
+        "temperature": 0.7
+    }
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer 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"
+    }
+    response = requests.post(url, data=json.dumps(data), headers=headers)
+    response_data = json.loads(response.text)
+    return response_data['choices'][0]['text']
+
+predefined_messages = {
+    "hello": "Hello, how can I help you?",
+    "how are you?": "I'm doing well, thanks for asking.",
+    "what's your name?": "My name is ChatGPT.",
+    "exit": "Goodbye!"
+}
+
+while True:
+    message = input("You: ")
+    if message.lower() == "exit":
+        print(predefined_messages["exit"])
+        break
+    if message.lower() in predefined_messages:
+        print("ChatGPT:", predefined_messages[message.lower()])
+        continue
+    try:
+        response = chat(message)
+        print("ChatGPT:", response)
+    except:
+        print("ChatGPT: Sorry, I couldn't understand your message.")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nuevo:
+import requests
+import json
+import random
+import os
+import ipywidgets as widgets
+from IPython.display import display
+
+def chat(message):
+    url = "https://api.openai.com/v1/engines/davinci-codex/completions"
+    data = {
+        "prompt": message,
+        "max_tokens": 60,
+        "temperature": 0.7
+    }
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + os.getenv("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")
+    }
+    response = requests.post(url, data=json.dumps(data), headers=headers)
+    response_data = json.loads(response.text)
+    choices = response_data.get('choices', [])
+    if choices:
+        return choices[0]['text']
+    else:
+        return "I'm sorry, but I couldn't generate a response at the moment."
+
+predefined_messages = {
+    "hello": "Hello, how can I help you?",
+    "how are you?": "I'm doing well, thanks for asking.",
+    "what's your name?": "My name is ChatGPT.",
+    "exit": "Goodbye!"
+}
+
+user_input = input(">> ")
+if user_input.lower() in predefined_messages:
+    print(predefined_messages[user_input.lower()])
+elif user_input.lower() == "exit":
+    print(predefined_messages["exit"])
+else:
+    response = chat(user_input)
+    print(response)
+
+
+
+
+
